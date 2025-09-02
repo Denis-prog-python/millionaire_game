@@ -52,6 +52,7 @@ class GameState:
     def check_answer(self, answer_index):
         current_question = self.get_current_question()
         if current_question and answer_index == current_question.correct_index:
+            # Правильный ответ
             self.score = self.prize_levels[self.current_question_index]
             self.current_question_index += 1
 
@@ -61,7 +62,9 @@ class GameState:
                 return True, "ПОБЕДА! Вы выиграли 1.000.000 рублей!"
             return True, "Правильно!"
         else:
+            # Неправильный ответ
             self.game_over = True
+
             # Определяем несгораемую сумму
             safe_haven = 0
             for safe in self.safe_havens:
@@ -107,12 +110,38 @@ class GameState:
         remaining_percentage = 100 - correct_percentage
         wrong_options = [i for i in range(4) if i != current_question.correct_index]
 
-        for i in range(len(wrong_options)):
-            if i == len(wrong_options) - 1:
-                percentages[wrong_options[i]] = remaining_percentage
-            else:
-                percent = random.randint(5, remaining_percentage // 2)
-                percentages[wrong_options[i]] = percent
-                remaining_percentage -= percent
+        # Исправленная логика распределения процентов
+        if len(wrong_options) > 0:
+            # Распределяем проценты поровну с небольшими случайными отклонениями
+            base_percentage = remaining_percentage // len(wrong_options)
+
+            for i, option_index in enumerate(wrong_options):
+                if i == len(wrong_options) - 1:
+                    # Последнему варианту отдаем оставшиеся проценты
+                    percentages[option_index] = remaining_percentage
+                else:
+                    # Добавляем небольшое случайное отклонение (±5%)
+                    deviation = random.randint(-5, 5)
+                    percent = max(1, base_percentage + deviation)  # Не менее 1%
+                    percentages[option_index] = percent
+                    remaining_percentage -= percent
+
+        # Нормализуем проценты, чтобы сумма была равна 100
+        total = sum(percentages)
+        if total != 100:
+            # Корректируем проценты
+            correction = 100 - total
+            # Добавляем/вычитаем корректировку из неправильных ответов
+            for i in range(len(wrong_options)):
+                if correction == 0:
+                    break
+                option_index = wrong_options[i]
+                if correction > 0:
+                    percentages[option_index] += 1
+                    correction -= 1
+                else:
+                    if percentages[option_index] > 1:
+                        percentages[option_index] -= 1
+                        correction += 1
 
         return percentages
