@@ -1,0 +1,95 @@
+# Файлы окружения и настроек IDE
+.env
+.venv/
+env/
+venv/
+ENV/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Файлы установки и упаковки
+*.manifest
+*.spec
+installers/
+*.msi
+*.msm
+*.msp
+
+# Файлы PyInstaller
+*.exe
+*.zip
+dist/
+build/
+
+# Файлы кэша и временные файлы
+.cache/
+.nojekyll
+.npm
+.pytest_cache/
+.ropeproject
+/mr.developer.cfg
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+cover/
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Файлы операционных систем
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Файлы редакторов кода
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Файлы логирования
+*.log
+logs/
+
+# Файлы баз данных и состояний
+*.db
+*.sqlite3
+game_save.json
+scores.json
+
+# Файлы ресурсов (если они генерируются)
+/assets/generated/
